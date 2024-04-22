@@ -37,8 +37,8 @@ public class Clienti {
     //    @ManyToOne
 //    @JoinColumn(name = "indirizzo_id")
     private String sedeLegale;
-    //
-//    @ManyToOne
+
+    //    @ManyToOne
 //    @JoinColumn(name = "indirizzo_id")
     private String sedeOperativa;
 
