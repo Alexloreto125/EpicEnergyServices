@@ -38,11 +38,13 @@ public class UserService {
                 found.setName(payload.name());
                 found.setSurname(payload.surname());
                 found.setPassword(encoder.encode(payload.password()));
+                if (!found.getAvatar().contains("cloudinary")) found.setDeafaultAvatar();
             } else if (!this.userDAO.existsByUsername(payload.username())) {
                 found.setUsername(payload.username());
                 found.setName(payload.name());
                 found.setSurname(payload.surname());
                 found.setPassword(encoder.encode(payload.password()));
+                if (!found.getAvatar().contains("cloudinary")) found.setDeafaultAvatar();
             } else throw new BadRequestException("Username " + payload.username() + " is already taken");
             this.userDAO.save(found);
             return found;
