@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,9 @@ public class UserService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     public Page<User> findAll(int number, int size, String sortBy) {
         Pageable pageable = PageRequest.of(number, size, Sort.by(sortBy));
@@ -33,12 +37,12 @@ public class UserService {
             if (found.getUsername().equals(payload.username())) {
                 found.setName(payload.name());
                 found.setSurname(payload.surname());
-                found.setPassword(payload.password());
+                found.setPassword(encoder.encode(payload.password()));
             } else if (!this.userDAO.existsByUsername(payload.username())) {
                 found.setUsername(payload.username());
                 found.setName(payload.name());
                 found.setSurname(payload.surname());
-                found.setPassword(payload.password());
+                found.setPassword(encoder.encode(payload.password()));
             } else throw new BadRequestException("Username " + payload.username() + " is already taken");
             this.userDAO.save(found);
             return found;
@@ -48,5 +52,9 @@ public class UserService {
     public void findByIdAndDelete(long id) {
         User found = this.findById(id);
         this.userDAO.delete(found);
+    }
+
+    public User findByEmail(String email) {
+        return this.userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Email " + email + " has not been found"));
     }
 }
