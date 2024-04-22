@@ -32,6 +32,12 @@ public class FattureController {
         return this.fattureService.getInvoicesById(fatturaId);
     }
 
+    // GET BY CLIENTE
+    @GetMapping("/cliente")
+    private List<Fatture> getInvoicesByCliente(@RequestParam String cliente) {
+        return this.fattureService.getInvoicesByCliente(cliente);
+    }
+
     // GET BY STATE
     @GetMapping("/state")
     private List<Fatture> getInvoicesByState(@RequestParam String state) {
@@ -44,11 +50,13 @@ public class FattureController {
         return this.fattureService.findByDate(date);
     }
 
+    // GET BY YEAR
     @GetMapping("/year")
     private List<Fatture> getInvoicesByYear(@RequestParam int year) {
         return this.fattureService.findByYear(year);
     }
 
+    // GET BY RANGE IMPORT
     @GetMapping("/import")
     private List<Fatture> getInvoicesByRangeImport(@RequestParam double import1, double import2) {
         return this.fattureService.findByImport(import1, import2);

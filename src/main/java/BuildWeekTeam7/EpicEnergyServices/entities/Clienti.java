@@ -1,6 +1,7 @@
 package BuildWeekTeam7.EpicEnergyServices.entities;
 
 import BuildWeekTeam7.EpicEnergyServices.enums.TipoAzienda;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +49,7 @@ public class Clienti {
     private long telefonoContatto;
     private String logoAziendale;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "clienti")
     private List<Fatture> fattureList;
 
