@@ -53,6 +53,13 @@ public class UserController {
         this.userService.findByIdAndDelete(id);
     }
 
+    @PostMapping("/upload/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public User uploadAvatar(@RequestParam("avatar") MultipartFile image,
+                             @PathVariable long id) throws IOException {
+        return this.userService.uploadImage(image, id);
+    }
+
     @GetMapping("/me")
     public User findMe(@AuthenticationPrincipal User currentUser) {
         return currentUser;
