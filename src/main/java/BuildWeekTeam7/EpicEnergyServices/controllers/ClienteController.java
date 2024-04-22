@@ -44,7 +44,7 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.CREATED)
     public RispostaNewClienteDTO save(@RequestBody @Validated NewClienteDTO body, BindingResult validation) throws BadRequestException {
         if (validation.hasErrors()) {
-            throw new BadRequest(validation.getAllErrors());
+            throw new BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException(validation.getAllErrors());
         }
         return new RispostaNewClienteDTO(this.clientiService.save(body).getPartitaIva());
     }

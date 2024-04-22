@@ -1,6 +1,7 @@
 package BuildWeekTeam7.EpicEnergyServices.controllers;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Fatture;
+import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekTeam7.EpicEnergyServices.payloads.FattureDTO;
 import BuildWeekTeam7.EpicEnergyServices.services.FattureService;
 import org.springframework.beans.factory.annotation.Autowired;

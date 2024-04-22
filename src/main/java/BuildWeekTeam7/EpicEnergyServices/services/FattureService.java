@@ -1,7 +1,7 @@
 package BuildWeekTeam7.EpicEnergyServices.services;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Fatture;
-import BuildWeekTeam7.EpicEnergyServices.exception.NotFoundException;
+import BuildWeekTeam7.EpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekTeam7.EpicEnergyServices.payloads.FattureDTO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.FattureDAO;
 import org.springframework.beans.factory.annotation.Autowired;

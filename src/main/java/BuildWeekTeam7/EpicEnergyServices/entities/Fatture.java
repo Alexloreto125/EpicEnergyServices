@@ -13,8 +13,8 @@ import java.time.LocalDate;
 @ToString
 public class Fatture {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Setter (AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long numero;
 
     private LocalDate data;
@@ -23,9 +23,9 @@ public class Fatture {
 
     private String stato;
 
-//    @ManyToOne
-//    @JoinColumn (name = "clienti_id")
-//    private Clienti clienti;
+    @ManyToOne
+    @JoinColumn(name = "clienti_pIva")
+    private Clienti clienti;
 
     public Fatture(LocalDate data, double importo, String stato) {
         this.data = data;
