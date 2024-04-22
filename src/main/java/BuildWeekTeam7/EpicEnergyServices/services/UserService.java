@@ -5,6 +5,8 @@ import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewUserDTO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.UserDAO;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 public class UserService {
@@ -21,6 +26,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     public Page<User> findAll(int number, int size, String sortBy) {
         Pageable pageable = PageRequest.of(number, size, Sort.by(sortBy));
@@ -58,5 +66,13 @@ public class UserService {
 
     public User findByEmail(String email) {
         return this.userDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Email " + email + " has not been found"));
+    }
+
+
+    public User uploadImage(MultipartFile img, long id) throws IOException {
+        User found = this.findById(id);
+        String url = (String) cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setAvatar(url);
+        return this.userDAO.save(found);
     }
 }
