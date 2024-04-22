@@ -1,8 +1,6 @@
 package BuildWeekTeam7.EpicEnergyServices.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +20,11 @@ public class Clienti {
     @Id
     private String partitaIva;
 
-    private RagioneSociale ragioneSociale;
+    private String ragioneSociale;
+
+    @Enumerated(EnumType.STRING)
+    private TipoAzienda tipoAzienda;
+
     private String email;
     private long telefono;
     private String pec;
@@ -38,9 +40,10 @@ public class Clienti {
     private String logoAziendale;
 
     //Costruttore
-    public Clienti(String partitaIva, RagioneSociale ragioneSociale, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, String sedeLegale, String sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
+    public Clienti(String partitaIva,String ragioneSociale, TipoAzienda TipoAzienda, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, String sedeLegale, String sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
         this.partitaIva = partitaIva;
         this.ragioneSociale = ragioneSociale;
+        this.tipoAzienda = TipoAzienda;
         this.email = email;
         this.telefono = telefono;
         this.pec = pec;
