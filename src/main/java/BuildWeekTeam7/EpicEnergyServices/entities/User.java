@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties("password, role, authorities, accountNonExpired, credentialsNonExpired, accountNonLocked, enabled")
+@JsonIgnoreProperties({"password", "role", "authorities", "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "enabled"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
