@@ -30,7 +30,7 @@ public class AuthService {
         if (this.userDAO.existsByUsernameAndEmail(payload.username(), payload.email()))
             throw new BadRequestException("Email " + payload.email() + " and Username " + payload.username() + " are already taken");
         if (this.userDAO.existsByEmail(payload.email()))
-            throw new BadRequestException("Email ".concat(payload.email()).concat(" is already taken"));
+            throw new BadRequestException("Email " + payload.email() + " is already taken");
         if (this.userDAO.existsByUsername(payload.username()))
             throw new BadRequestException("Username " + payload.username() + " is already taken");
         User newUser = new User(payload.username(), payload.email(), encoder.encode(payload.password()), payload.name(), payload.surname());
