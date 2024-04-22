@@ -1,4 +1,4 @@
-package BuildWeekTeam7.EpicEnergyServices.repository;
+package BuildWeekTeam7.EpicEnergyServices.repositories;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.indirizzi.Comune;
 import BuildWeekTeam7.EpicEnergyServices.entities.indirizzi.Provincia;

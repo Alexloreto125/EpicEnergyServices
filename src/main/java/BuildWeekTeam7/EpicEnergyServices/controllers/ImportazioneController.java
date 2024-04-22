@@ -1,4 +1,4 @@
-package BuildWeekTeam7.EpicEnergyServices.controller;
+package BuildWeekTeam7.EpicEnergyServices.controllers;
 
 import BuildWeekTeam7.EpicEnergyServices.payloads.ImportazioneComuniDTO;
 import BuildWeekTeam7.EpicEnergyServices.services.ImportazioneService;
@@ -28,11 +28,11 @@ public class ImportazioneController {
     }
 
     @PostMapping("/province")
-    public ImportazioneComuniDTO importaProvince(){
+    public ImportazioneComuniDTO importaProvince() {
         try {
             importazioneService.importaProvince("province-italiane.csv");
             return new ImportazioneComuniDTO("Importazione completata con successo");
-        }catch (IOException exception) {
+        } catch (IOException exception) {
             exception.printStackTrace();
             return new ImportazioneComuniDTO("Errore durante l'importazione");
         }
