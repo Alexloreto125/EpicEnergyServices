@@ -22,7 +22,7 @@ public class Clienti {
     @Id
     private String partitaIva;
 
-    private String ragioneSociale;
+    private RagioneSociale ragioneSociale;
     private String email;
     private long telefono;
     private String pec;
@@ -38,7 +38,7 @@ public class Clienti {
     private String logoAziendale;
 
     //Costruttore
-    public Clienti(String partitaIva, String ragioneSociale, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, String sedeLegale, String sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
+    public Clienti(String partitaIva, RagioneSociale ragioneSociale, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, String sedeLegale, String sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
         this.partitaIva = partitaIva;
         this.ragioneSociale = ragioneSociale;
         this.email = email;
