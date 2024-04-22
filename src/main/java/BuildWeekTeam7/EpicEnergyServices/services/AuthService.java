@@ -39,7 +39,7 @@ public class AuthService {
 
     public String login(UserLoginDTO payload) {
         User found = this.userService.findByEmail(payload.email());
-        if (!encoder.matches(found.getPassword(), payload.password()))
+        if (!encoder.matches(payload.password(), found.getPassword()))
             throw new UnauthorizedException("Password is wrong");
         return jwtTools.createToken(found);
     }
