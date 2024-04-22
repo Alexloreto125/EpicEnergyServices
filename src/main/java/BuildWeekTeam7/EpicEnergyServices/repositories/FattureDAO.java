@@ -13,6 +13,10 @@ import java.util.Optional;
 
 @Repository
 public interface FattureDAO extends JpaRepository<Fatture, Long> {
-
+//    List<Fatture> findByClienti (Clienti clienti);
+    List<Fatture> findByStato (String stato);
+    List<Fatture> findByData (LocalDate data);
+    @Query("SELECT f FROM Fatture f WHERE f.importo BETWEEN :importoMin AND :importoMax")
+    List<Fatture> filterByImporto (@Param("importoMin") double prezzoMin, @Param("importoMax") double importoMax);
 
 }

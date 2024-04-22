@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping ("/fatture")
 public class FattureController {
@@ -17,9 +20,37 @@ public class FattureController {
     @Autowired
     private FattureService fattureService;
 
+    // GET
     @GetMapping
     private Page<Fatture> getAllInvoices(@RequestParam (defaultValue = "0") int page, @RequestParam (defaultValue = "10") int size, @RequestParam (defaultValue = "data") String sortBy){
         return this.fattureService.getAllInvoices(page, size, sortBy);
+    }
+
+    // GET BY ID
+    @GetMapping ("/{fatturaId}")
+    private Fatture getInvoices (@PathVariable long fatturaId){
+        return this.fattureService.getInvoicesById(fatturaId);
+    }
+
+    // GET BY STATE
+    @GetMapping ("/state")
+    private List<Fatture> getInvoicesByState(@RequestParam String state){
+        return this.fattureService.findByState(state);
+    }
+
+    // GET BY DATE
+    @GetMapping ("/date")
+    private List<Fatture> getInvoicesByDate(@RequestParam LocalDate date){
+        return this.fattureService.findByDate(date);
+    }
+
+    @GetMapping ("/year")
+    private List<Fatture> getInvoicesByYear(@RequestParam int year){
+        return this.fattureService.findByYear(year);
+    }
+    @GetMapping ("/import")
+    private List<Fatture> getInvoicesByRangeImport(@RequestParam double import1, double import2){
+        return this.fattureService.findByImport(import1, import2);
     }
 
     @PostMapping
@@ -31,10 +62,6 @@ public class FattureController {
         return this.fattureService.saveInvoices(payload);
     }
 
-    @GetMapping ("/{fatturaId}")
-    private Fatture getInvoices (@PathVariable long fatturaId){
-        return this.fattureService.getInvoicesById(fatturaId);
-    }
 
     @PutMapping ("/{fatturaId}")
     private Fatture updateInvoices (@RequestBody FattureDTO payload, @PathVariable long fatturaId){

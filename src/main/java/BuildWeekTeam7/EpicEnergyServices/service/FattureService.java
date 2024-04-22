@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FattureService {
@@ -23,7 +24,10 @@ public class FattureService {
     public Page<Fatture> getAllInvoices (int page, int size, String sortBy) {
         if (size > 30) size = 30;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        List<Fatture> a = findByState("IN_ELABORAZIONE");
+        System.out.println(a);
         return this.fattureDAO.findAll(pageable);
+
     }
 
     public Fatture getInvoicesById(long id){
@@ -47,8 +51,21 @@ public class FattureService {
         Fatture fatture = this.fattureDAO.findById(id).orElseThrow(() -> new NotFoundException("La fattura con il numero: " + id + " non è stata trovata"));
         this.fattureDAO.delete(fatture);
     }
+    public List<Fatture> findByState (String stato) {
+        return this.fattureDAO.findByStato(stato);
+    }
 
 
+    public List<Fatture> findByDate (LocalDate data) {
+        return this.fattureDAO.findByData(data);
+    }
+    public List<Fatture> findByImport (double importo1, double importo2) {
+        return this.fattureDAO.filterByImporto(importo1, importo2 );
+    }
+
+    public List<Fatture> findByYear (int year){
+      return this.fattureDAO.findAll().stream().filter(fatture -> fatture.getData().getYear() == year).collect(Collectors.toList());
+    }
 
 
 }
