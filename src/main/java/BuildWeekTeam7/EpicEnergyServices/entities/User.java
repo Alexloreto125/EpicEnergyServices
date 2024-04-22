@@ -2,10 +2,7 @@ package BuildWeekTeam7.EpicEnergyServices.entities;
 
 import BuildWeekTeam7.EpicEnergyServices.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +27,7 @@ public class User implements UserDetails {
 
     private String username, email, password, name, surname, avatar;
 
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     //    CONSTRUCTOR
