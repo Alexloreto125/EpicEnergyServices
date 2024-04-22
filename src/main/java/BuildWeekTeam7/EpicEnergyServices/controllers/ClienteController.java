@@ -1,10 +1,9 @@
 package BuildWeekTeam7.EpicEnergyServices.controllers;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Clienti;
-import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequest;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewClienteDTO;
 import BuildWeekTeam7.EpicEnergyServices.payloads.RispostaNewClienteDTO;
-import BuildWeekTeam7.EpicEnergyServices.service.ClientiService;
+import BuildWeekTeam7.EpicEnergyServices.services.ClientiService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +34,7 @@ public class ClienteController {
 
     // 2 - Visualizziamo un cliente specifico
     @GetMapping("/{partitaIva}")
-    public Clienti findById(@PathVariable String partitaIva){
+    public Clienti findById(@PathVariable String partitaIva) {
         return this.clientiService.findClientiByPartitaIva(partitaIva);
     }
 
@@ -44,16 +43,16 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RispostaNewClienteDTO save(@RequestBody @Validated NewClienteDTO body, BindingResult validation) throws BadRequestException {
-        if(validation.hasErrors()) {
+        if (validation.hasErrors()) {
             throw new BadRequest(validation.getAllErrors());
         }
         return new RispostaNewClienteDTO(this.clientiService.save(body).getPartitaIva());
     }
 
 
-     // 4 - Modifichaimo un cliente
+    // 4 - Modifichaimo un cliente
     @PutMapping("/modifica/{partitaIva}")
-    public Clienti findByIdAndUpdate(@PathVariable String partitaIva, @RequestBody Clienti body){
+    public Clienti findByIdAndUpdate(@PathVariable String partitaIva, @RequestBody Clienti body) {
         return this.clientiService.findByPartitaIvaAndUpdate(partitaIva, body);
     }
 
@@ -61,7 +60,7 @@ public class ClienteController {
     // 5 - Eliminiamo un cliente
     @DeleteMapping("/{partitaIva}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findByIdAndDelete(@PathVariable String partitaIva){
+    public void findByIdAndDelete(@PathVariable String partitaIva) {
         this.clientiService.findByPartitaIvaAndDelete(partitaIva);
     }
 

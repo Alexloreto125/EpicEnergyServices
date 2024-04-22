@@ -1,6 +1,6 @@
 package BuildWeekTeam7.EpicEnergyServices.payloads;
 
-import BuildWeekTeam7.EpicEnergyServices.entities.TipoAzienda;
+import BuildWeekTeam7.EpicEnergyServices.enums.TipoAzienda;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -45,5 +45,5 @@ public record NewClienteDTO(
         @NotEmpty(message = "Inserisci il logo aziendale")
         String logoAziendale
 
-        ) {
+) {
 }

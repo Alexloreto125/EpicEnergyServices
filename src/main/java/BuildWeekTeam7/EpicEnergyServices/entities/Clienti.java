@@ -1,5 +1,6 @@
 package BuildWeekTeam7.EpicEnergyServices.entities;
 
+import BuildWeekTeam7.EpicEnergyServices.enums.TipoAzienda;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,7 @@ public class Clienti {
     private String logoAziendale;
 
     //Costruttore
-    public Clienti(String partitaIva,String ragioneSociale, TipoAzienda TipoAzienda, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, String sedeLegale, String sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
+    public Clienti(String partitaIva, String ragioneSociale, TipoAzienda TipoAzienda, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, String sedeLegale, String sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
         this.partitaIva = partitaIva;
         this.ragioneSociale = ragioneSociale;
         this.tipoAzienda = TipoAzienda;
