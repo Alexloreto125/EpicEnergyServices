@@ -1,5 +1,6 @@
 package BuildWeekTeam7.EpicEnergyServices.entities;
 
+import BuildWeekTeam7.EpicEnergyServices.entities.indirizzi.Indirizzo;
 import BuildWeekTeam7.EpicEnergyServices.enums.TipoAzienda;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -35,13 +36,13 @@ public class Clienti {
     private LocalDate dataUltimoContatto;
     private long fatturatoAnnuo;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "indirizzo_id")
-    private String sedeLegale;
+    @ManyToOne
+   @JoinColumn(name = "sede_legale_id")
+    private Indirizzo sedeLegale;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "indirizzo_id")
-    private String sedeOperativa;
+    @ManyToOne
+   @JoinColumn(name = "sede_operativa_id")
+    private Indirizzo sedeOperativa;
 
     private String emailContatto;
     private String nomeContatto;
@@ -54,7 +55,7 @@ public class Clienti {
     private List<Fatture> fattureList;
 
     //Costruttore
-    public Clienti(String partitaIva, String ragioneSociale, TipoAzienda TipoAzienda, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, String sedeLegale, String sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
+    public Clienti(String partitaIva, String ragioneSociale, TipoAzienda TipoAzienda, String email, long telefono, String pec, LocalDate dataInserimento, LocalDate dataUltimoContatto, long fatturatoAnnuo, Indirizzo sedeLegale, Indirizzo sedeOperativa, String emailContatto, String nomeContatto, String cognomeContatto, long telefonoContatto, String logoAziendale) {
         this.partitaIva = partitaIva;
         this.ragioneSociale = ragioneSociale;
         this.tipoAzienda = TipoAzienda;

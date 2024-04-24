@@ -1,5 +1,6 @@
 package BuildWeekTeam7.EpicEnergyServices.payloads;
 
+import BuildWeekTeam7.EpicEnergyServices.entities.indirizzi.Indirizzo;
 import BuildWeekTeam7.EpicEnergyServices.enums.TipoAzienda;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -30,9 +31,9 @@ public record NewClienteDTO(
         @NotNull(message = "Il fatturato annuo è obbligatorio")
         long fatturatoAnnuo,
         @NotEmpty(message = "Inserisci la sede legale")
-        String sedeLegale,
+        Indirizzo sedeLegale,
         @NotEmpty(message = "Inserisci la sede operativa")
-        String sedeOperativa,
+        Indirizzo sedeOperativa,
         @NotEmpty(message = "Inserisci l'email del contatto")
         @Email(message = "L'email del contatto non è valida")
         String emailContatto,

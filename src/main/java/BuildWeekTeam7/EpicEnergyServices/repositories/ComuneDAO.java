@@ -1,11 +1,13 @@
 package BuildWeekTeam7.EpicEnergyServices.repositories;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.indirizzi.Comune;
+import BuildWeekTeam7.EpicEnergyServices.entities.indirizzi.Provincia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ComuneDAO extends JpaRepository<Comune, Long> {
-    Comune findByNome(String nome);
+import java.util.List;
 
-    Comune findBySiglaProvincia(String siglaProvincia);
+public interface ComuneDAO extends JpaRepository<Comune, Long> {
+    Comune findByComune(String nome);
+   List<Comune> findByNomeProvincia(Provincia provincia);
 
 }

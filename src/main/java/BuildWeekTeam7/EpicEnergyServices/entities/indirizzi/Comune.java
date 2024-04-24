@@ -19,10 +19,14 @@ public class Comune {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String comune;
 
-    private String siglaProvincia;
+    @Column(name = "provincia")
+    private String nomeProvincia;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provincia_id")
+    private Provincia provincia;
 
 }

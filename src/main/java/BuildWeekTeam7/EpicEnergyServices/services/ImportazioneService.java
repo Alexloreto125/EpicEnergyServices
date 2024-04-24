@@ -5,6 +5,7 @@ import BuildWeekTeam7.EpicEnergyServices.entities.indirizzi.Provincia;
 import BuildWeekTeam7.EpicEnergyServices.repositories.ComuneDAO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.ProvinciaDAO;
 import jakarta.transaction.Transactional;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -51,13 +52,20 @@ public class ImportazioneService {
 
 
                 if (parts.length >= 4) {     //* Controlliamo la lunghezza che contenga almeno 4 parti  ( 001;001;Agliè;Torino)
-                    String siglaProvincia = parts[3].trim(); //* Usiamo il trim per prendere in questo caso la sigla a posizione 4 eliminando spazi sia iniziali che finali
+                    String nomeProvincia = parts[3].trim(); //* Usiamo il trim per prendere in questo caso la sigla a posizione 4 eliminando spazi sia iniziali che finali
                     String nomeComune = parts[2].trim();
 
-                    Comune comune = new Comune(); //*Creiamo un comune vuoto
 
-                    comune.setNome(nomeComune);
-                    comune.setSiglaProvincia(siglaProvincia);   //* Riempiamo i campi
+                    Provincia provincia= provinciaDAO.findByProvincia(nomeProvincia);
+                    if (provincia == null) {
+                        throw new BadRequestException("Non esiste la provincia da associare al comune: "+ nomeProvincia);
+                    }
+                    Comune comune = new Comune(); //*Creiamo un comune vuoto
+                    comune.setComune(nomeComune);
+                    comune.setNomeProvincia(nomeProvincia);
+                    comune.setProvincia(provincia);
+
+                    //* Riempiamo i campi
                     comuneDAO.save(comune);                 //* Salviamo il comune
                 }
             }
@@ -84,7 +92,7 @@ public class ImportazioneService {
 
                     Provincia provincia = new Provincia();
 
-                    provincia.setNome(nomeProvincia);
+                    provincia.setProvincia(nomeProvincia);
                     provincia.setRegione(regione);
                     provincia.setSigla(sigla);
                     provinciaDAO.save(provincia);
