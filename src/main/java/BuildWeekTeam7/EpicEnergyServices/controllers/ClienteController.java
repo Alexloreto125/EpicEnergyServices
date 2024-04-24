@@ -1,6 +1,7 @@
 package BuildWeekTeam7.EpicEnergyServices.controllers;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Clienti;
+import BuildWeekTeam7.EpicEnergyServices.entities.User;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewClienteDTO;
 import BuildWeekTeam7.EpicEnergyServices.payloads.RispostaNewClienteDTO;
 import BuildWeekTeam7.EpicEnergyServices.services.ClientiService;
@@ -10,10 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -99,4 +103,10 @@ public class ClienteController {
         return new ResponseEntity<>(clientiFiltrati, HttpStatus.OK);
     }
 
+    // Carica il file dell'avatar
+    @PostMapping("/upload")
+    public Clienti uploadAvatar(@RequestParam("avatar") MultipartFile image,
+                             @AuthenticationPrincipal Clienti currentUser) throws IOException {
+        return this.clientiService.uploadImage(image, currentUser.getPartitaIva());
+    }
 }
