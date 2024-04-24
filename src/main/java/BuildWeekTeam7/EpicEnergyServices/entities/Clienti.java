@@ -74,4 +74,8 @@ public class Clienti {
         this.logoAziendale = logoAziendale;
 
     }
+
+    public Clienti(String email) {
+        this.email = email;
+    }
 }

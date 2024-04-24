@@ -3,6 +3,7 @@ package BuildWeekTeam7.EpicEnergyServices.services;
 import BuildWeekTeam7.EpicEnergyServices.entities.User;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.UnauthorizedException;
+import BuildWeekTeam7.EpicEnergyServices.mailgun.MailgunSender;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewUserDTO;
 import BuildWeekTeam7.EpicEnergyServices.payloads.UserLoginDTO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.UserDAO;
@@ -26,6 +27,9 @@ public class AuthService {
     @Autowired
     private JWTTools jwtTools;
 
+    @Autowired
+    private MailgunSender mailgunSender;
+
     public User register(NewUserDTO payload) {
         if (this.userDAO.existsByUsernameAndEmail(payload.username(), payload.email()))
             throw new BadRequestException("Email " + payload.email() + " and Username " + payload.username() + " are already taken");
@@ -34,6 +38,7 @@ public class AuthService {
         if (this.userDAO.existsByUsername(payload.username()))
             throw new BadRequestException("Username " + payload.username() + " is already taken");
         User newUser = new User(payload.username(), payload.email(), encoder.encode(payload.password()), payload.name(), payload.surname());
+        mailgunSender.sendRegistrationEmail(newUser);
         return this.userDAO.save(newUser);
     }
 
