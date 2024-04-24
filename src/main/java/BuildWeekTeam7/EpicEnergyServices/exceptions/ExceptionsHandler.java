@@ -18,6 +18,12 @@ public class ExceptionsHandler {
         return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
     }
 
+    @ExceptionHandler(NotFoundCliente.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private ErrorDTO NotFoundClienteHandler(NotFoundException ex) {
+        return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorDTO BadRequestExcpetionHandler(BadRequestException ex) {

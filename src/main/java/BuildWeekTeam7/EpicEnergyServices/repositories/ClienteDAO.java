@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ClienteDAO extends JpaRepository<Clienti, String> {
+    Clienti findByPartitaIva (String partitaIva);
 
     // Filtriamo tramite i metodi di JPA in base al fatturato annuo, che va da un minimo a un massimo
     List<Clienti> findByFatturatoAnnuoGreaterThanEqualAndFatturatoAnnuoLessThanEqual(long fatturatoMin, long fatturatoMax);

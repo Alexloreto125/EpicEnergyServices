@@ -1,4 +1,4 @@
-package BuildWeekTeam7.EpicEnergyServices.service;
+package BuildWeekTeam7.EpicEnergyServices.services;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Clienti;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.NotFoundCliente;
@@ -24,29 +24,30 @@ public class ClientiService {
 
     // 1 - VIsualizziamo tutti i clienti
     public Page<Clienti> getAllClienti(int pageNumber, int pageSize, String sortBy) {
-        if(pageSize > 20) pageSize = 20;
+        if (pageSize > 20) pageSize = 20;
         Pageable pageable;
         switch (sortBy) {
             case "nome":
-                 pageable = PageRequest.of(pageNumber, pageSize, Sort.by("ragioneSociale"));
+                pageable = PageRequest.of(pageNumber, pageSize, Sort.by("ragioneSociale"));
                 break;
             case "fatturatoAnnuale":
-                 pageable = PageRequest.of(pageNumber, pageSize, Sort.by("fatturatoAnnuo"));
+                pageable = PageRequest.of(pageNumber, pageSize, Sort.by("fatturatoAnnuo"));
                 break;
             case "dataInserimento":
-                 pageable = PageRequest.of(pageNumber, pageSize, Sort.by("dataInserimento"));
+                pageable = PageRequest.of(pageNumber, pageSize, Sort.by("dataInserimento"));
                 break;
             case "dataUltimoContatto":
-                 pageable = PageRequest.of(pageNumber, pageSize, Sort.by("dataUltimoContatto"));;
+                pageable = PageRequest.of(pageNumber, pageSize, Sort.by("dataUltimoContatto"));
+                ;
                 break;
             default:
-                 pageable = PageRequest.of(pageNumber, pageSize, Sort.by("dataInserimento"));
+                pageable = PageRequest.of(pageNumber, pageSize, Sort.by("dataInserimento"));
         }
         return this.clienteDAO.findAll(pageable);
     }
 
     // 2 - Visualizziamo un cliente specifico
-   public Clienti findClientiByPartitaIva(String partitaIva) {
+    public Clienti findClientiByPartitaIva(String partitaIva) {
         return this.clienteDAO.findById(partitaIva).orElseThrow(() -> new NotFoundCliente(partitaIva));
     }
 
@@ -61,12 +62,12 @@ public class ClientiService {
                     }
                 }
         );
-        Clienti newCliente = new Clienti(body.partitaIva(), body.ragioneSociale(),body.tipoAzienda(), body.email(), body.telefono(), body.pec(), body.dataInserimento(), body.dataUltimoContatto(), body.fatturatoAnnuo(), body.sedeLegale(), body.sedeOperativa(), body.emailContatto(), body.nomeContatto(), body.cognomeContatto(), body.telefonoContatto(), body.logoAziendale());
+        Clienti newCliente = new Clienti(body.partitaIva(), body.ragioneSociale(), body.tipoAzienda(), body.email(), body.telefono(), body.pec(), body.dataInserimento(), body.dataUltimoContatto(), body.fatturatoAnnuo(), body.sedeLegale(), body.sedeOperativa(), body.emailContatto(), body.nomeContatto(), body.cognomeContatto(), body.telefonoContatto(), body.logoAziendale());
         return clienteDAO.save(newCliente);
     }
 
     // 4 - Aggiorniamo un cliente
-    public Clienti findByPartitaIvaAndUpdate(String partitaIva, Clienti modifiedUser){
+    public Clienti findByPartitaIvaAndUpdate(String partitaIva, Clienti modifiedUser) {
         Clienti found = this.findClientiByPartitaIva(partitaIva);
         found.setRagioneSociale(modifiedUser.getRagioneSociale());
         found.setTipoAzienda(modifiedUser.getTipoAzienda());
@@ -91,7 +92,6 @@ public class ClientiService {
         Clienti cliente = this.findClientiByPartitaIva(partitaIva);
         this.clienteDAO.delete(cliente);
     }
-
 
 
     // I VARI FILTRI
