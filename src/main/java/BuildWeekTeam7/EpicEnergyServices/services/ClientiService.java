@@ -1,9 +1,12 @@
 package BuildWeekTeam7.EpicEnergyServices.services;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Clienti;
+import BuildWeekTeam7.EpicEnergyServices.entities.User;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.NotFoundCliente;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewClienteDTO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.ClienteDAO;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,6 +24,9 @@ import java.util.List;
 public class ClientiService {
     @Autowired
     private ClienteDAO clienteDAO;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     // Creiamo dei metodi per la gestione dei clienti
 
@@ -114,6 +122,13 @@ public class ClientiService {
     // Filtra per parte del nome
     public List<Clienti> filterByNome(String nomeParziale) {
         return clienteDAO.findByRagioneSocialeContainingIgnoreCase(nomeParziale);
+    }
+
+    public Clienti uploadImage(MultipartFile img, String partitaIva) throws IOException {
+        Clienti found = this.findClientiByPartitaIva(partitaIva);
+        String url = (String) cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setLogoAziendale(url);
+        return this.clienteDAO.save(found);
     }
 
 }
