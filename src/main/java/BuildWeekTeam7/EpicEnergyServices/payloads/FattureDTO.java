@@ -1,6 +1,7 @@
 package BuildWeekTeam7.EpicEnergyServices.payloads;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Clienti;
+import BuildWeekTeam7.EpicEnergyServices.entities.StatoFatture;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,9 +15,9 @@ public record FattureDTO(
                          @NotNull
                          @Min(0)
                          double importo,
-                         @NotEmpty(message = "Lo stato è obbligatorio")
-                         @Pattern(regexp = "IN_ELABORAZIONE|INVIATA|SCARTATA|EMESSA", message = "Inserisci uno stato valido tra IN_ELABORAZIONE, INVIATA, SCARTATA, EMESSA")
-                         String stato,
+                        @NotNull(message = "Lo stato è obbligatorio")
+                        StatoFatture stato,
+                         @NotNull(message = "Il cliente è obbligatorio")
                          String pIva
                          ) {
 }

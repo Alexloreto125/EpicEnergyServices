@@ -15,6 +15,7 @@ public record NewClienteDTO(
         String partitaIva,
         @NotEmpty(message = "ATTENZIONE! La ragioneSociale è obbligatoria")
         String ragioneSociale,
+        @NotNull(message = "Il tipo di azienda è obbligatorio")
         TipoAzienda tipoAzienda,
         @NotEmpty(message = "L'email è obbligatoria")
         @Email(message = "L'email inserita non è valida")

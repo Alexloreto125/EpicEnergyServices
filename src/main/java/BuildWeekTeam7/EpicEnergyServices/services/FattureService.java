@@ -2,10 +2,12 @@ package BuildWeekTeam7.EpicEnergyServices.services;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Clienti;
 import BuildWeekTeam7.EpicEnergyServices.entities.Fatture;
+import BuildWeekTeam7.EpicEnergyServices.entities.StatoFatture;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekTeam7.EpicEnergyServices.payloads.FattureDTO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.ClienteDAO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.FattureDAO;
+import BuildWeekTeam7.EpicEnergyServices.repositories.StatoFattureDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,12 @@ public class FattureService {
     @Autowired
     private ClientiService clientiService;
 
+    @Autowired
+    private StatoFattureDAO statoFattureDAO;
+
+    @Autowired
+    private StatoFattureService statoFattureService;
+
     public Page<Fatture> getAllInvoices(int page, int size, String sortBy) {
         if (size > 30) size = 30;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
@@ -41,7 +49,8 @@ public class FattureService {
     }
 
     public Fatture saveInvoices(FattureDTO payload) {
-        Fatture fatture = new Fatture(payload.data(), payload.importo(), payload.stato(), clientiService.findClientiByPartitaIva(payload.pIva()));
+        StatoFatture stato = this.statoFattureService.getStatoFattureByNome(String.valueOf(payload.stato().getNome()));
+        Fatture fatture = new Fatture(payload.data(), payload.importo(), stato, clientiService.findClientiByPartitaIva(payload.pIva()));
         return this.fattureDAO.save(fatture);
     }
 
@@ -61,10 +70,9 @@ public class FattureService {
     public Clienti findByCliente(String partitaIva) {
         return this.clienteDAO.findByPartitaIva(partitaIva);
     }
-    public List<Fatture> findByState(String stato) {
+    public List<Fatture> findByState(StatoFatture stato) {
         return this.fattureDAO.findByStato(stato);
     }
-
 
     public List<Fatture> findByDate(LocalDate data) {
         return this.fattureDAO.findByData(data);
@@ -82,5 +90,7 @@ public class FattureService {
         Clienti clienti = findByCliente(partitaIva);
         return this.fattureDAO.findByClienti(clienti);
     }
+
+
 
 }
