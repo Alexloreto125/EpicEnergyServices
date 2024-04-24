@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserTest {
 
     private final String putPayload = "{\"email\":\"email@email.com\",\"password\":\"password\", \"username\":\"username1\",\"name\":\"name1\",\"surname\":\"surname1\"}";
+
     @Autowired
     private UserDAO userDAO;
     @Autowired
@@ -73,7 +74,7 @@ public class UserTest {
         this.userDAO.save(deleteUser);
         User deleteFound = this.userService.findByEmail("delete@delete.com");
         long id = deleteFound.getId();
-        
+
         mockMvc.perform(delete("/users/" + id)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + adminToken))
                 .andExpect(status().isNoContent());
