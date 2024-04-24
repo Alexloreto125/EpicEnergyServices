@@ -3,6 +3,7 @@ package BuildWeekTeam7.EpicEnergyServices.services;
 import BuildWeekTeam7.EpicEnergyServices.entities.User;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.NotFoundException;
+import BuildWeekTeam7.EpicEnergyServices.mailgun.MailgunSender;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewUserDTO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.UserDAO;
 import com.cloudinary.Cloudinary;
