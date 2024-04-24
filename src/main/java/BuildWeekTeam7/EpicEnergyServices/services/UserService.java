@@ -35,9 +35,11 @@ public class UserService {
         return this.userDAO.findAll(pageable);
     }
 
+
     public User findById(long id) {
         return this.userDAO.findById(id).orElseThrow(() -> new NotFoundException("User " + id + " has not been found"));
     }
+
 
     public User findByIdAndUpdate(long id, NewUserDTO payload) {
         User found = this.findById(id);
@@ -58,6 +60,7 @@ public class UserService {
             return found;
         } else throw new BadRequestException("You are not allowed to change the email without permission");
     }
+
 
     public void findByIdAndDelete(long id) {
         User found = this.findById(id);
