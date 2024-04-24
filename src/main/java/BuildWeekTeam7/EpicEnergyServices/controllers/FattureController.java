@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -64,16 +65,15 @@ public class FattureController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private Fatture saveInvoices(@RequestBody FattureDTO payload, BindingResult validation) {
-        if (validation.hasErrors()) {
-            throw new BadRequestException(validation.getAllErrors());
-        }
+    private Fatture saveInvoices(@RequestBody @Validated FattureDTO payload, BindingResult validation) {
+        if (validation.hasErrors()) throw new BadRequestException(validation.getAllErrors());
         return this.fattureService.saveInvoices(payload);
     }
 
 
     @PutMapping("/{fatturaId}")
-    private Fatture updateInvoices(@RequestBody FattureDTO payload, @PathVariable long fatturaId) {
+    private Fatture updateInvoices(@RequestBody @Validated FattureDTO payload, @PathVariable long fatturaId, BindingResult validation) {
+        if (validation.hasErrors()) throw new BadRequestException(validation.getAllErrors());
         return this.fattureService.updateInvoices(payload, fatturaId);
     }
 

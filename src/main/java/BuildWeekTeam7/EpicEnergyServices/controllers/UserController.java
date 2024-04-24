@@ -2,6 +2,7 @@ package BuildWeekTeam7.EpicEnergyServices.controllers;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.User;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException;
+import BuildWeekTeam7.EpicEnergyServices.mailgun.MailgunSender;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewUserDTO;
 import BuildWeekTeam7.EpicEnergyServices.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

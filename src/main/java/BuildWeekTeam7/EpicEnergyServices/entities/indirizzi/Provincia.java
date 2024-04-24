@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "province")
 @Getter
@@ -19,8 +22,12 @@ public class Provincia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String provincia;
     private String sigla;
     private String regione;
 
+
+
+    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Comune> comuni = new ArrayList<>();
 }

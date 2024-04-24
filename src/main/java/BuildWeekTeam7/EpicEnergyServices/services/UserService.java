@@ -3,6 +3,7 @@ package BuildWeekTeam7.EpicEnergyServices.services;
 import BuildWeekTeam7.EpicEnergyServices.entities.User;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.NotFoundException;
+import BuildWeekTeam7.EpicEnergyServices.mailgun.MailgunSender;
 import BuildWeekTeam7.EpicEnergyServices.payloads.NewUserDTO;
 import BuildWeekTeam7.EpicEnergyServices.repositories.UserDAO;
 import com.cloudinary.Cloudinary;
@@ -35,9 +36,11 @@ public class UserService {
         return this.userDAO.findAll(pageable);
     }
 
+
     public User findById(long id) {
         return this.userDAO.findById(id).orElseThrow(() -> new NotFoundException("User " + id + " has not been found"));
     }
+
 
     public User findByIdAndUpdate(long id, NewUserDTO payload) {
         User found = this.findById(id);
@@ -58,6 +61,7 @@ public class UserService {
             return found;
         } else throw new BadRequestException("You are not allowed to change the email without permission");
     }
+
 
     public void findByIdAndDelete(long id) {
         User found = this.findById(id);
