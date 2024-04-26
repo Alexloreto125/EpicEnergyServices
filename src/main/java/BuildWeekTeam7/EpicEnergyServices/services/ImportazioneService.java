@@ -81,6 +81,9 @@ public class ImportazioneService {
                     }
                 }
             }
+            if (!errori.isEmpty()) {
+                throw new BadRequestException(errori);
+            }
         }
     }
 
