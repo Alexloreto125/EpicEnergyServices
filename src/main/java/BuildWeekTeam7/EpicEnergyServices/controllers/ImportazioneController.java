@@ -22,8 +22,8 @@ public class ImportazioneController {
             return new ImportazioneComuniDTO("Importazione completata con successo");
 
         } catch (IOException exception) {
-            exception.printStackTrace();
-            return new ImportazioneComuniDTO("Errore durante l'importazione");
+            //exception.printStackTrace();
+            return new ImportazioneComuniDTO(exception.getMessage());
         }
     }
 
