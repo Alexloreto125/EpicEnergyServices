@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ImportazioneService {
@@ -43,7 +45,8 @@ public class ImportazioneService {
             //! IN QUESTO CASO LEGGIAMO DAL CSV RIGA PER RIGA
 
             //* quindi convertiamo il file in caratteri e poi lo leggiamo
-
+            Map<String, String> provinciaMancante = new HashMap<>();
+            String errori = "";
             String testo;
             while ((testo = br.readLine()) != null) {     //* Questo ciclo legge ogni riga del file CSV finché non raggiungiamo la fine del file
                 String[] parts = testo.split(";"); //*  Suddividiamo ogni riga in un array di stringhe, usando il punto e virgola come delimitatore. Ogni elemento dell'array parts conterrà una parte della riga del CSV.
@@ -55,18 +58,27 @@ public class ImportazioneService {
                     String nomeProvincia = parts[3].trim(); //* Usiamo il trim per prendere in questo caso la sigla a posizione 4 eliminando spazi sia iniziali che finali
                     String nomeComune = parts[2].trim();
 
-
-                    Provincia provincia= provinciaDAO.findByNomeProvincia(nomeProvincia);
+                    Provincia provincia = provinciaDAO.findByNomeProvincia(nomeProvincia);
                     if (provincia == null) {
-                        throw new BadRequestException("Non esiste la provincia da associare al comune: "+ nomeProvincia);
-                    }
-                    Comune comune = new Comune(); //*Creiamo un comune vuoto
-                    comune.setNomeComune(nomeComune);
-                    comune.setNomeProvincia(nomeProvincia);
-                    comune.setProvincia(provincia);
+                        if (provinciaMancante.get(nomeProvincia)==null){
+                            errori = errori + "provincia mancante: " + nomeProvincia+",";
+                            provinciaMancante.put(nomeProvincia,nomeProvincia);
+                        }
+//                        Provincia provinciaRegione = provinciaDAO.findByRegione(nomeProvincia);
+//                        if (provinciaRegione != null) {
+//                            provincia.setRegione(nomeProvincia);
+//                           provincia.setSigla(provinciaRegione.getSigla());
+//                        }
+//                        provinciaDAO.save(provincia);
+                    } else {
+                        Comune comune = new Comune(); //*Creiamo un comune vuoto
+                        comune.setNomeComune(nomeComune);
+                        comune.setNomeProvincia(nomeProvincia);
+                        comune.setProvincia(provincia);
 
-                    //* Riempiamo i campi
-                    comuneDAO.save(comune);                 //* Salviamo il comune
+                        //* Riempiamo i campi
+                        comuneDAO.save(comune);                 //* Salviamo il comune
+                    }
                 }
             }
         }
