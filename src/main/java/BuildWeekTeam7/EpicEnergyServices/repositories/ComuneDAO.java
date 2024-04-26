@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ComuneDAO extends JpaRepository<Comune, Long> {
-    Comune findByComune(String nome);
+    Comune findByNomeComune(String nome);
    List<Comune> findByNomeProvincia(Provincia provincia);
 
 }

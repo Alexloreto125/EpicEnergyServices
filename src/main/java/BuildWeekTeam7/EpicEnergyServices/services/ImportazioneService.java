@@ -56,12 +56,12 @@ public class ImportazioneService {
                     String nomeComune = parts[2].trim();
 
 
-                    Provincia provincia= provinciaDAO.findByProvincia(nomeProvincia);
+                    Provincia provincia= provinciaDAO.findByNomeProvincia(nomeProvincia);
                     if (provincia == null) {
                         throw new BadRequestException("Non esiste la provincia da associare al comune: "+ nomeProvincia);
                     }
                     Comune comune = new Comune(); //*Creiamo un comune vuoto
-                    comune.setComune(nomeComune);
+                    comune.setNomeComune(nomeComune);
                     comune.setNomeProvincia(nomeProvincia);
                     comune.setProvincia(provincia);
 
@@ -92,9 +92,9 @@ public class ImportazioneService {
 
                     Provincia provincia = new Provincia();
 
-                    provincia.setProvincia(nomeProvincia);
+                    provincia.setNomeProvincia(nomeProvincia);
                     provincia.setRegione(regione);
-                    provincia.setSigla(sigla);
+                    provincia.setSiglaProvincia(sigla);
                     provinciaDAO.save(provincia);
                 }
             }

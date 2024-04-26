@@ -14,20 +14,22 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 
 public class Provincia {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    private String provincia;
-    private String sigla;
+    private String nomeProvincia;
+    private String siglaProvincia;
     private String regione;
 
-
-
-    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comune> comuni = new ArrayList<>();
+
+    public Provincia(String nomeProvincia, String siglaProvincia, String regione) {
+        this.nomeProvincia = nomeProvincia;
+        this.siglaProvincia = siglaProvincia;
+        this.regione = regione;
+    }
 }
