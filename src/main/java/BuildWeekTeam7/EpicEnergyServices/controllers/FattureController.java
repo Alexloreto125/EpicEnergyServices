@@ -36,31 +36,31 @@ public class FattureController {
 
     // GET BY CLIENTE
     @GetMapping("/cliente")
-    private List<Fatture> getInvoicesByCliente(@RequestParam String cliente) {
+    private List<Fatture> getInvoicesByCliente(@RequestParam(name = "cliente", required = false) String cliente) {
         return this.fattureService.getInvoicesByCliente(cliente);
     }
 
     // GET BY STATE
     @GetMapping("/state")
-    private List<Fatture> getInvoicesByState(@RequestParam StatoFatture state) {
+    private List<Fatture> getInvoicesByState(@RequestParam(name = "stato", required = false) StatoFatture state) {
         return this.fattureService.findByState(state);
     }
 
     // GET BY DATE
     @GetMapping("/date")
-    private List<Fatture> getInvoicesByDate(@RequestParam LocalDate date) {
+    private List<Fatture> getInvoicesByDate(@RequestParam(name = "date", required = false) LocalDate date) {
         return this.fattureService.findByDate(date);
     }
 
     // GET BY YEAR
     @GetMapping("/year")
-    private List<Fatture> getInvoicesByYear(@RequestParam int year) {
+    private List<Fatture> getInvoicesByYear(@RequestParam(name = "year", required = false) int year) {
         return this.fattureService.findByYear(year);
     }
 
     // GET BY RANGE IMPORT
     @GetMapping("/import")
-    private List<Fatture> getInvoicesByRangeImport(@RequestParam double import1, double import2) {
+    private List<Fatture> getInvoicesByRangeImport(@RequestParam(name = "to", required = false) double import1, @RequestParam(name = "from", required = false) double import2) {
         return this.fattureService.findByImport(import1, import2);
     }
 
