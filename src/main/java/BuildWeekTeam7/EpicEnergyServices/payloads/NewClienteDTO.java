@@ -15,6 +15,7 @@ public record NewClienteDTO(
         String partitaIva,
         @NotEmpty(message = "ATTENZIONE! La ragioneSociale è obbligatoria")
         String ragioneSociale,
+        @NotNull(message = "Il tipo di azienda è obbligatorio")
         TipoAzienda tipoAzienda,
         @NotEmpty(message = "L'email è obbligatoria")
         @Email(message = "L'email inserita non è valida")
@@ -30,9 +31,9 @@ public record NewClienteDTO(
         LocalDate dataUltimoContatto,
         @NotNull(message = "Il fatturato annuo è obbligatorio")
         long fatturatoAnnuo,
-        @NotEmpty(message = "Inserisci la sede legale")
+        @NotNull(message = "Inserisci la sede legale")
         Indirizzo sedeLegale,
-        @NotEmpty(message = "Inserisci la sede operativa")
+        @NotNull(message = "Inserisci la sede operativa")
         Indirizzo sedeOperativa,
         @NotEmpty(message = "Inserisci l'email del contatto")
         @Email(message = "L'email del contatto non è valida")

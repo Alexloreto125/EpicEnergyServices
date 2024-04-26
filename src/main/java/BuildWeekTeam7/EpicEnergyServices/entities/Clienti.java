@@ -36,12 +36,12 @@ public class Clienti {
     private LocalDate dataUltimoContatto;
     private long fatturatoAnnuo;
 
-    @ManyToOne
-   @JoinColumn(name = "sede_legale_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sede_legale_id")
     private Indirizzo sedeLegale;
 
-    @ManyToOne
-   @JoinColumn(name = "sede_operativa_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sede_operativa_id")
     private Indirizzo sedeOperativa;
 
     private String emailContatto;

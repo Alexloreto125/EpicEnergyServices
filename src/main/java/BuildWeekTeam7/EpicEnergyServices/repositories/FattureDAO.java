@@ -2,6 +2,7 @@ package BuildWeekTeam7.EpicEnergyServices.repositories;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Clienti;
 import BuildWeekTeam7.EpicEnergyServices.entities.Fatture;
+import BuildWeekTeam7.EpicEnergyServices.entities.StatoFatture;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface FattureDAO extends JpaRepository<Fatture, Long> {
     List<Fatture> findByClienti (Clienti clienti);
-    List<Fatture> findByStato (String stato);
+    List<Fatture> findByStato(StatoFatture stato);
     List<Fatture> findByData (LocalDate data);
     @Query("SELECT f FROM Fatture f WHERE f.importo BETWEEN :importoMin AND :importoMax")
     List<Fatture> filterByImporto (@Param("importoMin") double prezzoMin, @Param("importoMax") double importoMax);

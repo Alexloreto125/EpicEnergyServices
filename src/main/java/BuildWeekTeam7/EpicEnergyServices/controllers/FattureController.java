@@ -1,6 +1,7 @@
 package BuildWeekTeam7.EpicEnergyServices.controllers;
 
 import BuildWeekTeam7.EpicEnergyServices.entities.Fatture;
+import BuildWeekTeam7.EpicEnergyServices.entities.StatoFatture;
 import BuildWeekTeam7.EpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekTeam7.EpicEnergyServices.payloads.FattureDTO;
 import BuildWeekTeam7.EpicEnergyServices.services.FattureService;
@@ -41,7 +42,7 @@ public class FattureController {
 
     // GET BY STATE
     @GetMapping("/state")
-    private List<Fatture> getInvoicesByState(@RequestParam String state) {
+    private List<Fatture> getInvoicesByState(@RequestParam StatoFatture state) {
         return this.fattureService.findByState(state);
     }
 
