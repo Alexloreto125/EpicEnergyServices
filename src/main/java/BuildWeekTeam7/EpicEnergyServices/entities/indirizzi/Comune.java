@@ -21,7 +21,7 @@ public class Comune {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nomeComune;
+    private String comune;
 
     @Column(name = "provincia")
     private String nomeProvincia;
@@ -33,8 +33,8 @@ public class Comune {
     @OneToMany(mappedBy = "comune", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Indirizzo> indirizzi = new ArrayList<>();
 
-    public Comune(String nomeComune, String nomeProvincia) {
-        this.nomeComune = nomeComune;
+    public Comune(String comune, String nomeProvincia) {
+        this.comune = comune;
         this.nomeProvincia = nomeProvincia;
     }
 

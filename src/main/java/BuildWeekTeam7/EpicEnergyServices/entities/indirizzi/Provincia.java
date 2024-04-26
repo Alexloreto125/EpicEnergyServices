@@ -33,9 +33,4 @@ public class Provincia {
     @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Comune> comuni = new ArrayList<>();
 
-    public Provincia(String nomeProvincia, String siglaProvincia, String regione) {
-        this.nomeProvincia = nomeProvincia;
-        this.siglaProvincia = siglaProvincia;
-        this.regione = regione;
-    }
 }
