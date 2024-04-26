@@ -21,12 +21,16 @@ public class Provincia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String provincia;
     private String sigla;
     private String regione;
 
 
+    public Provincia(String provincia, String sigla, String regione) {
+        this.provincia = provincia;
+        this.sigla = sigla;
+        this.regione = regione;
+    }
 
     @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Comune> comuni = new ArrayList<>();

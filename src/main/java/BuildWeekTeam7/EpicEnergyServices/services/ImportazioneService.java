@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ImportazioneService {
@@ -35,6 +37,7 @@ public class ImportazioneService {
     //! QUANDO ANDREMO A CHIAMARE IL METODO METTEREMO IL NOME DEL FILE TRA ()
     public void importaComuni(String file) throws IOException {
 
+
         Resource resource = new ClassPathResource("csv/" + file); //* resource è un'interfaccia che astrae l'accesso a un file mentre ClassPathResource (implementazione di resource) ci dà accesso al package CSV
 
         try (
@@ -43,7 +46,8 @@ public class ImportazioneService {
             //! IN QUESTO CASO LEGGIAMO DAL CSV RIGA PER RIGA
 
             //* quindi convertiamo il file in caratteri e poi lo leggiamo
-
+            Map<String, String> provinciaMancante = new HashMap<>();
+            String errori = "";
             String testo;
             while ((testo = br.readLine()) != null) {     //* Questo ciclo legge ogni riga del file CSV finché non raggiungiamo la fine del file
                 String[] parts = testo.split(";"); //*  Suddividiamo ogni riga in un array di stringhe, usando il punto e virgola come delimitatore. Ogni elemento dell'array parts conterrà una parte della riga del CSV.
@@ -56,20 +60,36 @@ public class ImportazioneService {
                     String nomeComune = parts[2].trim();
 
 
-                    Provincia provincia= provinciaDAO.findByProvincia(nomeProvincia);
+                    Provincia provincia = provinciaDAO.findByProvincia(nomeProvincia);
                     if (provincia == null) {
-                        throw new BadRequestException("Non esiste la provincia da associare al comune: "+ nomeProvincia);
-                    }
-                    Comune comune = new Comune(); //*Creiamo un comune vuoto
-                    comune.setComune(nomeComune);
-                    comune.setNomeProvincia(nomeProvincia);
-                    comune.setProvincia(provincia);
+                        if (provinciaMancante.get(nomeProvincia)==null){
+                        errori = errori + "provincia mancante: " + nomeProvincia+",";
+                        provinciaMancante.put(nomeProvincia,nomeProvincia);
+                        }
+//                        Provincia provinciaRegione = provinciaDAO.findByRegione(nomeProvincia);
+//                        if (provinciaRegione != null) {
+//                            provincia.setRegione(nomeProvincia);
+//                           provincia.setSigla(provinciaRegione.getSigla());
+//                        }
+//                        provinciaDAO.save(provincia);
+                    } else {
+                        Comune comune = new Comune(); //*Creiamo un comune vuoto
+                        comune.setComune(nomeComune);
+                        comune.setNomeProvincia(nomeProvincia);
+                        comune.setProvincia(provincia);
 
-                    //* Riempiamo i campi
-                    comuneDAO.save(comune);                 //* Salviamo il comune
+                        //* Riempiamo i campi
+                        comuneDAO.save(comune);                 //* Salviamo il comune
+                    }
                 }
             }
+            if (!errori.isEmpty()) {
+                throw new BadRequestException(errori);
+            }
+
         }
+
+
     }
 
     @Transactional
@@ -90,15 +110,17 @@ public class ImportazioneService {
                     String sigla = parts[0].trim();
 
 
-                    Provincia provincia = new Provincia();
-
-                    provincia.setProvincia(nomeProvincia);
-                    provincia.setRegione(regione);
-                    provincia.setSigla(sigla);
+                    Provincia provincia = new Provincia(nomeProvincia, sigla, regione);
                     provinciaDAO.save(provincia);
+
+
+//                    provincia.setProvincia(nomeProvincia);
+//                    provincia.setRegione(regione);
+//                    provincia.setSigla(sigla);
                 }
             }
         }
     }
+
 
 }
