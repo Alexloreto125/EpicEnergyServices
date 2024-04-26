@@ -16,16 +16,22 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Indirizzo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String via;
     private int civico;
     private String localita;
     private int cap;
-    private String comune;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "comune_id")
+    private Comune comune;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "provincia_id")
+    private Provincia provincia;
 
     @JsonIgnore
     @OneToMany(mappedBy = "sedeLegale", cascade = CascadeType.ALL)
@@ -34,4 +40,13 @@ public class Indirizzo {
     @JsonIgnore
     @OneToMany(mappedBy = "sedeOperativa", cascade = CascadeType.ALL)
     private List<Clienti> clientiSedeOperativa;
+
+    public Indirizzo(String via, int civico, String localita, int cap, Comune comune, Provincia provincia) {
+        this.via = via;
+        this.civico = civico;
+        this.localita = localita;
+        this.cap = cap;
+        this.comune = comune;
+        this.provincia = provincia;
+    }
 }

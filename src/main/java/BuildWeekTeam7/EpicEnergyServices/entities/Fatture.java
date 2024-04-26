@@ -22,14 +22,16 @@ public class Fatture {
 
     private double importo;
 
-    private String stato;
+    @ManyToOne
+    @JoinColumn(name = "stato_id")
+    private StatoFatture stato;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "clienti_pIva")
     private Clienti clienti;
 
-    public Fatture(LocalDate data, double importo, String stato, Clienti clienti) {
+    public Fatture(LocalDate data, double importo, StatoFatture stato, Clienti clienti) {
         this.data = data;
         this.importo = importo;
         this.stato = stato;
